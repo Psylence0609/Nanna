@@ -41,6 +41,25 @@ function imageFromPath(src: string): TributeImage {
   };
 }
 
+function buildRiverPath(rowCount: number) {
+  const rowHeight = 420;
+  const viewBoxHeight = Math.max(rowHeight, rowCount * rowHeight);
+  const curves = Array.from({ length: rowCount }, (_, index) => {
+    const startY = index * rowHeight;
+    const endY = (index + 1) * rowHeight;
+    const bend = index % 2 === 0 ? -68 : 68;
+
+    return `C${120 + bend} ${startY + 140} ${120 + bend} ${
+      startY + 280
+    } 120 ${endY}`;
+  });
+
+  return {
+    path: `M120 0 ${curves.join(" ")}`,
+    viewBoxHeight,
+  };
+}
+
 function useTributeAnimations() {
   useEffect(() => {
     const reduceMotion = window.matchMedia(
@@ -149,9 +168,10 @@ function useTributeAnimations() {
       const rect = section.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const start = viewportHeight * 0.58;
-      const travelDistance = rect.height + viewportHeight * 0.92;
-      const rawProgress =
-        (start - rect.top) / travelDistance;
+      const finish = viewportHeight * 0.42;
+      const travelDistance = Math.max(rect.height - (start - finish), 1);
+      const riverDrawSpeed = 1.45;
+      const rawProgress = ((start - rect.top) / travelDistance) * riverDrawSpeed;
       const progress = Math.min(Math.max(rawProgress, 0), 1);
 
       if (Math.abs(progress - latestProgress) > 0.006) {
@@ -370,9 +390,7 @@ function Timeline({ onOpenImage }: { onOpenImage: (image: TributeImage) => void 
     { length: Math.ceil(timelineImages.length / 2) },
     (_, index) => timelineImages.slice(index * 2, index * 2 + 2),
   );
-
-  const riverPath =
-    "M120 0 C58 140 52 270 120 420 C188 570 188 730 120 880 C52 1030 52 1190 120 1340 C174 1462 164 1532 120 1680";
+  const river = buildRiverPath(Math.max(imagePairs.length, 1));
 
   return (
     <section id="years" className="timeline-section">
@@ -387,7 +405,7 @@ function Timeline({ onOpenImage }: { onOpenImage: (image: TributeImage) => void 
       <div className="memory-path">
         <svg
           className="river-line"
-          viewBox="0 0 240 1680"
+          viewBox={`0 0 240 ${river.viewBoxHeight}`}
           preserveAspectRatio="none"
           aria-hidden="true"
         >
@@ -400,19 +418,19 @@ function Timeline({ onOpenImage }: { onOpenImage: (image: TributeImage) => void 
           </defs>
           <path
             className="river-bank"
-            d={riverPath}
+            d={river.path}
           />
           <path
             className="river-draw"
-            d={riverPath}
+            d={river.path}
           />
           <path
             className="river-flow river-flow-a"
-            d={riverPath}
+            d={river.path}
           />
           <path
             className="river-flow river-flow-b"
-            d={riverPath}
+            d={river.path}
           />
         </svg>
 
@@ -516,6 +534,7 @@ function Closing({ onOpenImage }: { onOpenImage: (image: TributeImage) => void }
 
   return (
     <section id="closing" className="closing-section reveal-motion">
+      <PhotoFrame image={closing.image} onOpen={onOpenImage} />
       <div>
         <div className="section-kicker">
           <Heart aria-hidden="true" size={18} />
@@ -535,7 +554,6 @@ function Closing({ onOpenImage }: { onOpenImage: (image: TributeImage) => void }
         </div>
         <p className="family-signature">{closing.signature}</p>
       </div>
-      <PhotoFrame image={closing.image} onOpen={onOpenImage} />
     </section>
   );
 }

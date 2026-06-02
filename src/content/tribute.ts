@@ -67,13 +67,15 @@ export const tribute = {
   closing: {
     title: "With love, always",
     body: "Thank you for being such an incredible father, husband and role model. Thank you for our steady hand, our problem solver, our quiet comedian and the person we all look for in a room. Now please buy that automatic car, plan that Ladakh trip and let me pretend I am the responsible one for a change. We love you, Nanna.  ",
-    bucketListTitle: "Now the calendar is yours",
+    bucketListTitle: "Your bucket list",
     bucketList: [
       "Buy that automatic car and keep the passenger seat ready.",
       "Come to the USA without asking anyone for leave approval.",
-      "Plan the Ladakh trip and take the long, beautiful route.",
+      "Plan a Ladakh trip and take the long, beautiful route.",
       "Get that Yoga mat flattened out.",
       "Spend more mornings with family, green tea, and no office rush.",
+      "...",
+      "..."
     ],
     signature: "With Love, Surabhi Family",
     image: {

@@ -156,13 +156,13 @@ main {
 
 .photo-frame img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: var(--muted);
+  height: auto;
+  background: #ffffff;
 }
 
 .hero-image .photo-frame img {
-  aspect-ratio: 4 / 5;
+  max-height: min(72vh, 680px);
+  object-fit: contain;
 }
 
 /* photo-caption removed to display clean photos without a bottom bar */
@@ -341,7 +341,7 @@ main {
 }
 
 .memory-photo .photo-frame img {
-  aspect-ratio: 5 / 5;
+  height: auto;
 }
 
 .message-card p {
@@ -747,10 +747,6 @@ main {
     display: grid;
   }
 
-  .hero-image .photo-frame img {
-    aspect-ratio: 16 / 11;
-  }
-
   .river-line {
     left: 28px;
     width: 86px;
@@ -780,10 +776,6 @@ main {
 
   .memory-photo.is-right {
     grid-row: 2;
-  }
-
-  .memory-photo .photo-frame img {
-    aspect-ratio: 16 / 11;
   }
 
   .tribute-modal {
