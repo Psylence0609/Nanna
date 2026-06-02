@@ -28,7 +28,7 @@ export const tribute = {
   },
   timelineEntries: [
     "photos/Nanna-early.jpeg",
-    "photos/S.jpeg",
+    "photos/S.png",
     "photos/R.jpeg",
     "photos/A.jpeg",
     "photos/All.jpeg",
