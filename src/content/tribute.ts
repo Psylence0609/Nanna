@@ -14,7 +14,7 @@ export const tribute = {
   hero: {
     name: "Nanna",
     subtitle: "No alarms. No files. No registrations. Just you and a very well-earned next chapter.",
-    dateLabel: "42 years later: officially free",
+    dateLabel: "42 years later, officially free",
     image: {
       src: "photos/Nanna-Hero.jpeg",
       alt: "A warm family portrait placeholder for Nanna",
@@ -66,7 +66,7 @@ export const tribute = {
   ],
   closing: {
     title: "With love, always",
-    body: "Thank you for being such an incredible father, husband and role model. Thank you for our steady hand, our problem solver, our quiet comedian and the person we all look for in a room. Now please buy that automatic car, plan that Ladakh trip and let me pretend I am the responsible one for a change. We love you, Nanna.  ",
+    body: "Thank you for being such an incredible father, husband and role model. Thank you for your steady hand, our problem solver, our quiet comedian and the person we all look for in a room. Let me pretend I am the responsible one for a change. We love you, Nanna.",
     bucketListTitle: "Your bucket list",
     bucketList: [
       "Buy that automatic car and keep the passenger seat ready.",
