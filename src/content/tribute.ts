@@ -61,7 +61,7 @@ export const tribute = {
     {
       from: "Neelima",
       relation: "Forever grateful",
-      body: "Happy Retirement Bavagaru 💐 \nFor all the years I have known you, there was never a moment where you have given up or not able to do something you have put your mind in. I always wish that gene would carry over to the next gen too 😊. Remembering all those days where even after a full day of work you used to engage us with outings and movies since we came for our summer visits. Also never forget our late night “literature” card game. Your hardwork and dedication, determination are all the reasons why we are all well settled and prosperous now. It’s undeniable. The sacrifices you have made to bring up all of us is what sets you apart from all the other brothers in the world.\nThank you for all that you have done and are doing and pretty sure will be doing for us all 🙏.\nWishing you a peaceful and healthy years ahead.",
+      body: "Happy Retirement Bavagaru 💐 \nFor all the years I have known you, there was never a moment where you have given up or not able to do something you have put your mind in. I always wish that gene would carry over to the next gen too 😊. Remembering all those days where even after a full day of work you used to engage us with outings and movies since we came for our summer visits. Also never forget our late night “literature” card game. Your hard work and dedication, determination are all the reasons why we are all well settled and prosperous now. It’s undeniable. The sacrifices you have made to bring up all of us is what sets you apart from all the other brothers in the world.\nThank you for all that you have done and are doing and pretty sure will be doing for us all 🙏.\nWishing you peaceful and healthy years ahead.",
     },
     {
       from: "Kalpana",
@@ -71,7 +71,7 @@ export const tribute = {
     {
       from: "Rajyalakshmi",
       relation: "For being the rock of our family",
-      body: "Prakash congratulations.Chala happy ga smile chestu unnavu  ,photos lo.All the best.Always be like that only"
+      body: "Prakash congratulations. Chala happy ga smile chestu unnavu, photos lo. All the best. Always be like that only."
     },
     {
       from : "Ravi Kumar",
@@ -98,7 +98,7 @@ export const tribute = {
   },
   closing: {
     title: "With love, always",
-    body: "Thank you for being such an incredible father, husband and role model. Thank you for your steady hand, our problem solver, our quiet comedian and the person we all look for in a room. Let me pretend I am the responsible one for a change. We love you, Nanna.",
+    body: "Thank you for being such an incredible father, husband and role model. Thank you for being our steady hand, our problem solver, our quiet comedian and the person we all look for in a room. Let me pretend I am the responsible one for a change. We love you, Nanna.",
     bucketListTitle: "Your bucket list",
     bucketList: [
       "Buy that automatic car and keep the passenger seat ready.",
