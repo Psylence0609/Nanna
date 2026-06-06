@@ -38,6 +38,7 @@ export const tribute = {
     "photos/Cousins.jpeg",
     "photos/Jaipur.jpg",
     "photos/Signature.jpeg",
+    "photos/Fam2.jpeg",
     "photos/Full.jpg",
     "photos/grad.jpeg",
     "photos/Nanna-Office.jpeg",
