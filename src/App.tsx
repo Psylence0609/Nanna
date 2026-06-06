@@ -5,13 +5,22 @@ import {
   Camera,
   CheckCircle2,
   Heart,
+  Music,
+  Pause,
+  Play,
+  Volume2,
   Sparkles,
   X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "./components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { tribute, type Message, type TributeImage } from "./content/tribute";
+
+type TributeVideo = {
+  src: string;
+  title: string;
+};
 
 type ViewerState =
   | { kind: "image"; image: TributeImage }
@@ -38,6 +47,24 @@ function imageFromPath(src: string): TributeImage {
     src,
     alt: name ? `${name} photo` : "Timeline photo",
     caption: "",
+  };
+}
+
+function titleFromPath(src: string, fallback: string) {
+  return (
+    src
+      .split("/")
+      .pop()
+      ?.replace(/\.[^.]+$/, "")
+      .replace(/[-_]+/g, " ")
+      .trim() || fallback
+  );
+}
+
+function videoFromPath(src: string, index: number): TributeVideo {
+  return {
+    src,
+    title: titleFromPath(src, `Video ${index + 1}`),
   };
 }
 
@@ -85,26 +112,13 @@ function useTributeAnimations() {
             return;
           }
 
-          const isMemoryStop = entry.target.classList.contains("memory-stop");
-
           animate(entry.target, {
             opacity: [0, 1],
-            translateY: isMemoryStop ? [42, 0] : [24, 0],
-            scale: isMemoryStop ? [0.97, 1] : [1, 1],
-            duration: isMemoryStop ? 920 : 780,
+            translateY: [24, 0],
+            scale: [1, 1],
+            duration: 780,
             ease: "out(3)",
           });
-
-          if (isMemoryStop) {
-            animate(entry.target.querySelectorAll(".memory-photo"), {
-              opacity: [0, 1],
-              translateY: [34, 0],
-              rotate: [-1.6, 0],
-              duration: 860,
-              delay: stagger(90),
-              ease: "out(3)",
-            });
-          }
 
           observer.unobserve(entry.target);
         });
@@ -242,6 +256,22 @@ function PhotoFrame({
       />
       
     </button>
+  );
+}
+
+function VideoCard({ video }: { video: TributeVideo }) {
+  return (
+    <Card className="message-card video-card">
+      <div className="video-card-media">
+        <video
+          src={assetPath(video.src)}
+          controls
+          preload="metadata"
+          playsInline
+          aria-label={video.title}
+        />
+      </div>
+    </Card>
   );
 }
 
@@ -386,11 +416,11 @@ function Intro() {
 
 function Timeline({ onOpenImage }: { onOpenImage: (image: TributeImage) => void }) {
   const timelineImages = tribute.timelineEntries.map(imageFromPath);
-  const imagePairs = Array.from(
-    { length: Math.ceil(timelineImages.length / 2) },
-    (_, index) => timelineImages.slice(index * 2, index * 2 + 2),
+  const leftImages = timelineImages.filter((_, index) => index % 2 === 0);
+  const rightImages = timelineImages.filter((_, index) => index % 2 === 1);
+  const river = buildRiverPath(
+    Math.max(leftImages.length, rightImages.length, 1),
   );
-  const river = buildRiverPath(Math.max(imagePairs.length, 1));
 
   return (
     <section id="years" className="timeline-section">
@@ -434,23 +464,21 @@ function Timeline({ onOpenImage }: { onOpenImage: (image: TributeImage) => void 
           />
         </svg>
 
-        {imagePairs.map((pair) => (
-          <article
-            className="memory-stop reveal-motion"
-            key={pair.map((image) => image.src).join("-")}
-          >
-            {pair.map((image, imageIndex) => (
-              <div
-                className={`memory-photo ${
-                  imageIndex === 0 ? "is-left" : "is-right"
-                }`}
-                key={`${image.src}-${imageIndex}`}
-              >
-                <PhotoFrame image={image} onOpen={onOpenImage} />
-              </div>
-            ))}
-          </article>
-        ))}
+        <div className="memory-column memory-column-left">
+          {leftImages.map((image) => (
+            <div className="memory-photo is-left reveal-motion" key={image.src}>
+              <PhotoFrame image={image} onOpen={onOpenImage} />
+            </div>
+          ))}
+        </div>
+
+        <div className="memory-column memory-column-right">
+          {rightImages.map((image) => (
+            <div className="memory-photo is-right reveal-motion" key={image.src}>
+              <PhotoFrame image={image} onOpen={onOpenImage} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -529,6 +557,34 @@ function Messages({ onOpenMessage }: { onOpenMessage: (message: Message) => void
   );
 }
 
+function Videos() {
+  const videos = tribute.videos.map(videoFromPath);
+
+  if (videos.length === 0) {
+    return null;
+  }
+
+  return (
+    <section id="videos" className="videos-section">
+      <div className="section-heading reveal-motion">
+        {/* <div className="section-kicker">
+          <Video aria-hidden="true" size={18} />
+          Video memories
+        </div> */}
+        <h2>Last day at work!</h2>
+      </div>
+
+      <div className="message-grid">
+        {videos.map((video) => (
+          <article className="reveal-motion" key={video.src}>
+            <VideoCard video={video} />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function Closing({ onOpenImage }: { onOpenImage: (image: TributeImage) => void }) {
   const { closing } = tribute;
 
@@ -558,6 +614,125 @@ function Closing({ onOpenImage }: { onOpenImage: (image: TributeImage) => void }
   );
 }
 
+function BackgroundSongControl() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showMusicPrompt, setShowMusicPrompt] = useState(false);
+  const { backgroundSong } = tribute;
+  const hasSong = backgroundSong.src.trim().length > 0;
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (!audio || !hasSong) {
+      return;
+    }
+
+    audio.volume = Math.min(Math.max(backgroundSong.volume, 0), 1);
+    let needsGestureRetry = false;
+
+    const playSong = async () => {
+      try {
+        await audio.play();
+        needsGestureRetry = false;
+        setIsPlaying(true);
+        setShowMusicPrompt(false);
+      } catch {
+        needsGestureRetry = true;
+        setIsPlaying(false);
+        setShowMusicPrompt(true);
+      }
+    };
+
+    const retryAfterGesture = () => {
+      setShowMusicPrompt(false);
+
+      if (needsGestureRetry && audio.paused) {
+        void playSong();
+      }
+    };
+
+    void playSong();
+    window.addEventListener("pointerdown", retryAfterGesture, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", retryAfterGesture);
+    };
+  }, [backgroundSong.src, backgroundSong.volume, hasSong]);
+
+  if (!hasSong) {
+    return null;
+  }
+
+  const toggleSong = async () => {
+    const audio = audioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    if (audio.paused) {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        setShowMusicPrompt(false);
+      } catch {
+        setIsPlaying(false);
+        setShowMusicPrompt(true);
+      }
+      return;
+    }
+
+    audio.pause();
+    setIsPlaying(false);
+    setShowMusicPrompt(false);
+  };
+
+  return (
+    <>
+      <audio
+        ref={audioRef}
+        src={assetPath(backgroundSong.src)}
+        loop
+        preload="auto"
+        onPlay={() => {
+          setIsPlaying(true);
+          setShowMusicPrompt(false);
+        }}
+        onPause={() => setIsPlaying(false)}
+      />
+      {showMusicPrompt ? (
+        <div className="tap-to-begin-stage" aria-live="polite">
+          <div className="tap-to-begin">
+            <span className="tap-ripple tap-ripple-one" aria-hidden="true" />
+            <span className="tap-ripple tap-ripple-two" aria-hidden="true" />
+            <span className="tap-core" aria-hidden="true">
+              <Volume2 size={22} />
+            </span>
+            <span className="tap-copy">Tap to begin</span>
+          </div>
+        </div>
+      ) : null}
+      <div className="background-song-control">
+        <button
+          type="button"
+          className="song-toggle"
+          aria-label={isPlaying ? "Pause background song" : "Play background song"}
+          onClick={toggleSong}
+          title={isPlaying ? "Pause song" : "Play song"}
+        >
+          <Music aria-hidden="true" size={17} />
+          {isPlaying ? (
+            <Pause aria-hidden="true" size={18} />
+          ) : (
+            <Play aria-hidden="true" size={18} />
+          )}
+        </button>
+      </div>
+    </>
+  );
+}
+
 export default function App() {
   const [viewer, setViewer] = useState<ViewerState>(null);
   useTributeAnimations();
@@ -568,8 +743,10 @@ export default function App() {
       <Intro />
       <Timeline onOpenImage={(image) => setViewer({ kind: "image", image })} />
       <Messages onOpenMessage={(message) => setViewer({ kind: "message", message })} />
+      <Videos />
       <Closing onOpenImage={(image) => setViewer({ kind: "image", image })} />
       <TributeViewer viewer={viewer} onClose={() => setViewer(null)} />
+      <BackgroundSongControl />
     </main>
   );
 }

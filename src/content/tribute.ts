@@ -34,8 +34,13 @@ export const tribute = {
     "photos/All.jpeg",
     "photos/All-2.jpeg",
     "photos/nanna-family.jpeg",
+    "photos/fam.jpeg",
+    "photos/Cousins.jpeg",
+    "photos/Full.jpg",
+    "photos/grad.jpeg",
     "photos/Nanna-Office.jpeg",
     "photos/Nanna-work.jpeg",
+    "photos/function.jpeg",
   ],
   messages: [
     {
@@ -62,8 +67,35 @@ export const tribute = {
       from: "Kalpana",
       relation: "Always a source of inspiration",
       body: "ప్రియమైన బావగారికి,\nమీ పదవీ విరమణ సందర్భంగా మీకు నా హృదయపూర్వక అభినందనలు! ఎన్నో సంవత్సరాల పాటు మీరు ఎంతో నిబద్ధతతో, క్రమశిక్షణతో ఉద్యోగ బాధ్యతలను నిర్వహించి, ఇప్పుడు ఈ విశ్రాంత దశలోకి అడుగుపెడుతున్నందుకు చాలా సంతోషంగా ఉంది. మీ శ్రమ, బాధ్యతాయుతమైన పనితీరు మా అందరికీ ఎప్పుడూ స్ఫూర్తిదాయకం. ఇన్నాళ్లూ కుటుంబం కోసం, సమాజం కోసం మీరు చేసిన కృషికి ప్రతిఫలంగా, ఇక ముందు ఉండబోయే కాలం మీకు ఎంతో ప్రశాంతంగా, ఆరోగ్యంగా ఉండాలని ఆ దేవుడిని మనసారా కోరుకుంటున్నాను. ఉద్యోగ ఒత్తిడి నుండి విముక్తి పొంది, ఇప్పుడు మీకు నచ్చిన పనులు చేసుకుంటూ, మీ కుటుంబ సభ్యులతో కలిసి సంతోషకరమైన మధుర జ్ఞాపకాలను సృష్టించుకోవాలని ఆశిస్తున్నాను. మీ రాబోయే రోజులో మీకు ఎంతో ఉత్సాహంగా, సంతోషంగా సాగాలని కోరుకుంటూ, మన కుటుంబానికి నా శుభాకాంక్షలు.\nమీ రిటైర్మెంట్ జీవితం బాగుండాలని మరోసారి ఆకాంక్షిస్తున్నాను.\nమీరు అన్ని పనులు పూర్తి చేసుకొని త్వరగా అత్తయ్యగారితో ఇక్కడికి రావాలని మా అందరితో ఆనందంగా గడపాలని  మనస్పూర్తిగా ఆశిస్తున్నాము"
-    }
+    },
+    {
+      from: "Rajyalakshmi",
+      relation: "For being the rock of our family",
+      body: "Prakash congratulations.Chala happy ga smile chestu unnavu  ,photos lo.All the best.Always be like that only"
+    },
+    {
+      from : "Ravi Kumar",
+      relation: "With love and respect",
+      body: "🌹 Congratulations & Best Wishes to Dear Prakash  🌹\n\nA remarkable career crowned with the honour of elevation as DIG at the time of superannuation is a testament to your dedication, integrity, and outstanding service.\nMay your retirement be filled with happiness, good health, cherished moments with family, and continued achievements in every sphere of life. Your service may conclude, but the respect and legacy you have built will endure for years to come.\n💐 Wishing you a happy, healthy, and fulfilling retired life. 💐"
+    },
+    {
+      from:"Sandhya",
+      relation: "Forever grateful",
+      body: "After years of dedication and service, it's time to enjoy the rewards, Happy retirement life Anna"
+    },
   ],
+  videos: [
+    // Add video files here, for example:
+    // "videos/nanna-message.mp4",
+    "videos/R.mp4",
+    "videos/S.mp4",
+    "videos/Nanna.mp4"
+  ],
+  backgroundSong: {
+    // Add the song path here when ready, for example: "audio/background-song.mp3"
+    src: "Background.mp3",
+    volume: 0.32,
+  },
   closing: {
     title: "With love, always",
     body: "Thank you for being such an incredible father, husband and role model. Thank you for your steady hand, our problem solver, our quiet comedian and the person we all look for in a room. Let me pretend I am the responsible one for a change. We love you, Nanna.",
