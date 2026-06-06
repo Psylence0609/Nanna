@@ -13,7 +13,7 @@ export type Message = {
 export const tribute = {
   hero: {
     name: "Nanna",
-    subtitle: "Prakash Surabhi, DIG Karimnagar.\nNo alarms. No files. No registrations. Just you and a very well-earned next chapter.",
+    subtitle: "Prakash Surabhi, DIG Karimnagar.\n\nNo alarms. No files. No registrations. Just you and a very well-earned next chapter.",
     dateLabel: "42 years later, officially free",
     image: {
       src: "photos/Nanna-Hero.jpeg",
@@ -37,12 +37,14 @@ export const tribute = {
     "photos/fam.jpeg",
     "photos/Cousins.jpeg",
     "photos/Jaipur.jpg",
+    "photos/Signature.jpeg",
     "photos/Full.jpg",
     "photos/grad.jpeg",
     "photos/Nanna-Office.jpeg",
     "photos/Nanna-work.jpeg",
     "photos/Sandhya.png",
     "photos/function.jpeg",
+    "photos/Swimming.png"
   ],
   messages: [
     {
