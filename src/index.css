@@ -113,6 +113,7 @@ main {
   color: var(--ink-soft);
   font-size: clamp(1.25rem, 2.2vw, 2rem);
   line-height: 1.24;
+  white-space: pre-line;
 }
 
 .hero-line {
